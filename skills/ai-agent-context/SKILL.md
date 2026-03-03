@@ -1,11 +1,6 @@
 ---
 name: ai-context-engineer
-description: >
-  AI context engineer for writing, auditing, and optimizing LLM agent contexts
-  (CLAUDE.md, SKILL.md, system prompts, agent instructions) and technical
-  documentation (architecture, APIs, specs). Use when editing .md documentation
-  files, creating or reviewing agent instructions, or optimizing token efficiency
-  of AI context.
+description: Write, audit, and optimize LLM agent context files. Use for .md documentation editing or agent instruction optimization.
 ---
 
 # AI Context Engineer
@@ -45,7 +40,8 @@ Mixed approach (usually best): declare goal and constraints, provide imperative 
 - One concept per sentence
 - Short identifiers after first definition: `rps` not `records per second`
 - No repeated information — reference, don't copy
-- Target: 80%+ facts, <5% filler, <10% duplication
+- Budget: main context ≤ 100 actionable instructions. Frontier models follow ~150–200 total; agent harness consumes ~50
+- Before adding any instruction: "will removing this cause the agent to fail on a concrete task?" If no — cut it
 
 ### Progressive Disclosure
 
@@ -72,7 +68,7 @@ Use consistently:
 - PREFER: soft preferences among valid alternatives
 - AVOID: allowed but discouraged
 
-## Preserve Always (Technical Docs)
+## When Editing Technical Docs — Preserve
 
 - Architecture diagrams, data flows
 - Concurrency: sync points, memory visibility, happens-before, lock guarantees
@@ -136,6 +132,13 @@ bad:  if agent.buffer.blockNewRecord(): return i         // BLOCK: halt
 bad:  key = addKey(cipher, symbol)                       resolve symbol to integer key
 ```
 
+## What to Exclude
+
+- Repository overviews and directory listings
+- Anything discoverable from existing README/docs
+- Style/formatting rules enforceable by linter
+- "Nice to know" background that doesn't change the agent's next action
+
 ## Anti-Patterns to Fix
 
 | Anti-Pattern | Fix |
@@ -162,6 +165,10 @@ bad:  key = addKey(cipher, symbol)                       resolve symbol to integ
 - No contradictions between sections
 - Priority markers used consistently
 - Escalation/failure paths defined
+
+## Validation
+
+No context file is proven useful until tested on real tasks. Run agent on 5+ representative tasks with and without context. Track: success rate, step count, cost. If context doesn't improve success rate — cut it.
 
 ## When Updating
 
