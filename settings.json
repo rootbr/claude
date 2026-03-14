@@ -1,16 +1,4 @@
 {
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '<user-prompt-submit-hook>Before responding, check the user message. If the message is written in Russian (fully or partially), start your response with: **English:** then write how this message should be properly written in English. Then proceed with your normal response. If the message is already in English, check for errors. If found, start with: **Corrections:** ~~wrong~~ → **right**, then **Corrected:** the full corrected sentence. If English is correct, skip corrections and proceed directly. Fix grammar, spelling, articles, verb tense, prepositions, word order. Preserve intent, technical terms, code, and file paths exactly.</user-prompt-submit-hook>'"
-          }
-        ]
-      }
-    ]
-  },
   "permissions": {
     "allow": [
       "Read",
@@ -25,7 +13,6 @@
       "WebFetch",
       "TodoRead",
       "TodoWrite",
-
       "Bash(cat *)",
       "Bash(echo *)",
       "Bash(printf *)",
@@ -79,7 +66,6 @@
       "Bash(md5:*)",
       "Bash(EOF)",
       "Bash(7zz:*)",
-
       "Bash(mvn *)",
       "Bash(./mvnw *)",
       "Bash(mvnw *)",
@@ -97,17 +83,13 @@
       "Bash(jstat *)",
       "Bash(jcmd *)",
       "Bash(jinfo *)",
-
       "Bash(git *)",
       "Bash(gh *)",
-
       "Bash(docker *)",
       "Bash(docker compose *)",
       "Bash(docker-compose *)",
-
       "Bash(curl *)",
       "Bash(wget *)",
-
       "Bash(rm *)",
       "Bash(rm -rf target)",
       "Bash(rm -rf target/*)",
@@ -115,7 +97,6 @@
       "Bash(rm -rf build/*)",
       "Bash(rm -rf .gradle)",
       "Bash(rm -rf out)",
-
       "Bash(lsof *)",
       "Bash(ss *)",
       "Bash(netstat *)",
@@ -129,12 +110,10 @@
       "Bash(du *)",
       "Bash(id *)",
       "Bash(whoami)",
-
       "Bash(jq *)",
       "Bash(yq *)",
       "Bash(xmllint *)",
       "Bash(xsltproc *)",
-
       "Bash(JAVA_HOME=* *)",
       "Bash(MAVEN_OPTS=* *)",
       "Bash(GRADLE_OPTS=* *)",
@@ -144,50 +123,6 @@
       "Bash(export JAVA_HOME=*)",
       "Bash(export MAVEN_OPTS=*)"
     ],
-
-    "ask": [
-      "Bash(sdk *)",
-      "Bash(brew *)",
-      "Bash(apt *)",
-      "Bash(apt-get *)",
-      "Bash(snap *)",
-      "Bash(pip *)",
-      "Bash(pip3 *)",
-      "Bash(python3 *)",
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "Bash(yarn *)",
-      "Bash(sudo *)",
-      "Bash(systemctl *)",
-      "Bash(service *)",
-      "Bash(update-alternatives *)",
-
-      "Bash(ssh *)",
-      "Bash(scp *)",
-      "Bash(rsync *)",
-      "Bash(psql *)",
-      "Bash(mysql *)",
-      "Bash(mongosh *)",
-      "Bash(redis-cli *)",
-
-      "Bash(chmod *)",
-      "Bash(chown *)",
-      "Bash(ln *)",
-
-      "Bash(crontab *)",
-      "Bash(at *)",
-
-      "Bash(source *)",
-      "Bash(eval *)",
-
-      "Bash(tar *)",
-      "Bash(7zz:*)",
-      "Bash(zip *)",
-      "Bash(unzip *)",
-      "Bash(gzip *)",
-      "Bash(gunzip *)"
-    ],
-
     "deny": [
       "Bash(rm -rf /)",
       "Bash(rm -rf /*)",
@@ -202,24 +137,20 @@
       "Bash(chmod -R 777 /*)",
       "Bash(chown -R * /)",
       "Bash(chown -R * /*)",
-
       "Bash(git push --force origin main)",
       "Bash(git push -f origin main)",
       "Bash(* --force-with-lease origin main)",
       "Bash(git reset --hard origin/*)",
-
       "Bash(mvn deploy *)",
       "Bash(./mvnw deploy *)",
       "Bash(gradle publish *)",
       "Bash(./gradlew publish *)",
       "Bash(npm publish *)",
       "Bash(yarn publish *)",
-
       "Bash(curl * | bash)",
       "Bash(curl * | sh)",
       "Bash(wget * | bash)",
       "Bash(wget * | sh)",
-
       "Bash(* > ~/.ssh/*)",
       "Bash(* > ~/.gitconfig)",
       "Bash(* > ~/.bashrc)",
@@ -242,18 +173,65 @@
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
       "Read(~/.kube/**)",
-
       "Bash(shutdown *)",
       "Bash(reboot *)",
       "Bash(init *)",
       "Bash(iptables *)",
       "Bash(ufw *)",
-
       "Bash(docker run --privileged *)",
       "Bash(docker run * --privileged *)",
       "Bash(docker run * --pid=host *)",
       "Bash(docker run * --network=host *)",
       "Bash(docker run * -v /var/run/docker.sock*)"
+    ],
+    "ask": [
+      "Bash(sdk *)",
+      "Bash(brew *)",
+      "Bash(apt *)",
+      "Bash(apt-get *)",
+      "Bash(snap *)",
+      "Bash(pip *)",
+      "Bash(pip3 *)",
+      "Bash(python3 *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(yarn *)",
+      "Bash(sudo *)",
+      "Bash(systemctl *)",
+      "Bash(service *)",
+      "Bash(update-alternatives *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "Bash(rsync *)",
+      "Bash(psql *)",
+      "Bash(mysql *)",
+      "Bash(mongosh *)",
+      "Bash(redis-cli *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(ln *)",
+      "Bash(crontab *)",
+      "Bash(at *)",
+      "Bash(source *)",
+      "Bash(eval *)",
+      "Bash(tar *)",
+      "Bash(7zz:*)",
+      "Bash(zip *)",
+      "Bash(unzip *)",
+      "Bash(gzip *)",
+      "Bash(gunzip *)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '<user-prompt-submit-hook>Before responding, check the user message language and grammar.\n\n**If Russian (fully or partially):**\nStart with: **English:** <proper English version of the message>\nThen respond normally.\n\n**If English with errors:**\nStart with:\n**Fix:** ~~wrong~~ → **right** — _reason_ (e.g. missing article \"the\" before specific nouns; wrong preposition: \"on\" → \"at\" for points in time; subject-verb agreement; uncountable noun; tense consistency)\nMultiple fixes on separate lines.\nThen: **✓** <full corrected sentence>\nThen respond normally.\n\n**If English is correct:**\nStart with: **✓ English OK**\nThen respond normally.\n\nRules: fix grammar, spelling, articles, verb tense, prepositions, word order, punctuation. Preserve intent, technical terms, code, file paths, and proper nouns exactly. Keep reasons ultra-short (3-8 words).</user-prompt-submit-hook>'"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -266,5 +244,6 @@
     "code-simplifier@claude-plugins-official": true,
     "context7@claude-plugins-official": false,
     "rust-analyzer-lsp@claude-plugins-official": false
-  }
+  },
+  "voiceEnabled": true
 }
