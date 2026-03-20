@@ -121,7 +121,8 @@
       "Bash(DATABASE_URL=* *)",
       "Bash(PORT=* *)",
       "Bash(export JAVA_HOME=*)",
-      "Bash(export MAVEN_OPTS=*)"
+      "Bash(export MAVEN_OPTS=*)",
+      "Bash(cmux *)"
     ],
     "deny": [
       "Bash(rm -rf /)",
