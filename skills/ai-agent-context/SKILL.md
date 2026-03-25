@@ -7,11 +7,11 @@ description: Write, audit, and optimize LLM agent context files. Use for .md doc
 
 Context is a finite resource with diminishing returns. Goal: smallest set of high-signal tokens that maximizes desired agent behavior. Every token justifies its presence.
 
-LLM = CPU, context window = RAM. You are the OS architect deciding what gets loaded into working memory.
+You are the OS architect deciding what gets loaded into working memory. Write for the agent, not for humans — use file paths, function names, expected behavior. Agents follow every instruction with equal fidelity, including wrong ones.
 
 ## Process
 
-1. Understand the agent's mission — purpose, users, tools
+1. Understand the agent's mission — purpose, users, tools. Start minimal: even project objectives + tech stack + conventions improves output from day one. If writing only one section, make it architecture
 2. Audit existing context — identify bloat, ambiguity, contradictions, gaps
 3. Draft or rewrite following principles below
 4. Self-review against checklist
@@ -41,20 +41,20 @@ Mixed approach (usually best): declare goal and constraints, provide imperative 
 - Short identifiers after first definition: `rps` not `records per second`
 - No repeated information — reference, don't copy
 - Budget: main context ≤ 100 actionable instructions. Frontier models follow ~150–200 total; agent harness consumes ~50
+- Never duplicate information the agent can discover from code, READMEs, or tool output
 - Before adding any instruction: "will removing this cause the agent to fail on a concrete task?" If no — cut it
 
 ### Progressive Disclosure
 
-Don't put everything in main context. Layered architecture:
+Don't put everything in main context. Tiered architecture:
 
-```
-CLAUDE.md (always loaded, <50 instructions)
-+-- docs/architecture.md      (on demand)
-+-- docs/code_conventions.md   (on demand)
-+-- docs/api_schemas.md        (on demand)
-```
+| Tier | Contents | Loading | Budget |
+|--|--|--|--|
+| Hot | CLAUDE.md / AGENTS.md — conventions, trigger tables, constraints | Always loaded | <50 instructions |
+| Warm | Domain-specific agent files — per-task specialists | Invoked when task matches | Unbounded per file, one at a time |
+| Cold | Knowledge base docs, schemas, API specs | Retrieved on demand (MCP/search) | Reference only what's needed |
 
-In main file, provide pointers with brief descriptions. Model reads only what it needs.
+Hot tier is your bottleneck. Every instruction there competes for attention. Move anything task-specific to warm tier; anything reference-like to cold tier.
 
 ### Positive Framing
 
@@ -67,6 +67,14 @@ Use consistently:
 - SHOULD: strong defaults, overridable with reason
 - PREFER: soft preferences among valid alternatives
 - AVOID: allowed but discouraged
+
+### Match Constraints to Model
+
+Heavy constraints (rigid schemas, exhaustive edge-case lists) help mid-tier models but hurt frontier models — they over-comply and lose flexibility. Scale constraint density to model capability:
+- Frontier models: fewer rules, more goals and heuristics
+- Mid-tier models: more explicit constraints and worked examples
+
+Format for your primary model: Claude processes XML tags best; consistent formatting in examples matters more than example quantity (3 good > 10 mediocre). Place most representative examples last — models exhibit 2-3x recency bias.
 
 ## When Editing Technical Docs — Preserve
 
@@ -87,6 +95,8 @@ Use consistently:
 - Horizontal rules (`---`) only for major breaks
 - No section intros ("This section describes...")
 - No meta-commentary ("It's important to note...")
+- Write at ~8th grade reading level — dense text degrades agent compliance
+- Mix writing styles deliberately: descriptive ("uses X pattern"), prescriptive ("follow Y"), conditional ("if Z, then use W"), explanatory ("avoid X because Y"). Pure prohibition lists are least effective
 
 ## Describing Content Types
 
@@ -151,6 +161,9 @@ bad:  key = addKey(cipher, symbol)                       resolve symbol to integ
 | 50 if-then edge cases | 3-5 canonical examples + declarative heuristic |
 | 500-word persona | 2-3 behavioral anchors |
 | "Don't do X" lists | Reframe as what to do instead |
+| Only build/run/arch rules | Add security, performance, and error-handling constraints |
+| File only grows, never pruned | Schedule periodic reviews; context debt accumulates like tech debt |
+| Over-pruned to bare minimum | Iterative trimming can strip essential content; test before cutting |
 
 ## Self-Review Checklist
 
@@ -159,6 +172,8 @@ bad:  key = addKey(cipher, symbol)                       resolve symbol to integ
 - Declarative where possible, imperative only where necessary
 - Tables only for lookup data
 - Code conventions reference source files, not pasted snippets
+- No references to renamed/removed code entities
+- Security, performance, and error-handling constraints present — not just functional rules
 - Tool descriptions non-overlapping with trigger conditions
 - Examples cover happy path, edge case, and escalation
 - Total token count justified — anything movable to reference files?
@@ -168,11 +183,17 @@ bad:  key = addKey(cipher, symbol)                       resolve symbol to integ
 
 ## Validation
 
-No context file is proven useful until tested on real tasks. Run agent on 5+ representative tasks with and without context. Track: success rate, step count, cost. If context doesn't improve success rate — cut it.
+No context file is proven useful until tested on real tasks. Run agent on 5+ representative tasks with and without context.
 
-## When Updating
+Track: step count, cost, success rate — in that priority order. Context improves efficiency (fewer steps, lower cost) more reliably than accuracy. If a section doesn't reduce steps or cost AND doesn't improve success rate — cut it.
 
-- Add to existing section if conceptually fits
-- Create new section only when no match exists
-- Merge duplicates immediately
-- Verify preservation rules
+## Maintenance
+
+Stale context causes silent failures — agents trust documentation absolutely. Context files need active upkeep, not write-once-forget.
+
+- Add to existing section if conceptually fits; new section only when no match exists
+- Merge duplicates immediately; verify preservation rules
+- After every significant codebase change: grep context files for references to renamed/removed entities
+- Quarterly: re-run validation on 5+ tasks. If a section no longer improves outcomes, cut it
+- If you explained the same thing to the agent twice across sessions, codify it
+- Never auto-generate context from existing docs — write from developer knowledge that ISN'T in the code

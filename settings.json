@@ -247,9 +247,10 @@
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": false,
     "code-simplifier@claude-plugins-official": true,
-    "context7@claude-plugins-official": false,
-    "rust-analyzer-lsp@claude-plugins-official": false
+    "context7@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": false,
+    "swift-lsp@claude-plugins-official": false
   },
-  "voiceEnabled": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "voiceEnabled": true
 }
