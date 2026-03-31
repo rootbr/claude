@@ -8,8 +8,8 @@ Use the process-meeting skill to process the provided meeting transcription.
 
 **Transcription**: $ARGUMENTS
 
-If no arguments provided, ask the user for:
-1. Path to the transcription file
+Ask the user for:
+1. Path to the transcription file (only if no arguments provided)
 2. Path to the documentation folder
 3. Path for output RFC/discussion files
 

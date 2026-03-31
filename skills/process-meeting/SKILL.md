@@ -19,8 +19,7 @@ The user provides:
 Before reading the transcription, ask the user:
 1. What were the main topics/agenda of this meeting?
 2. Were any supporting materials used during the discussion — diagrams, documents, links, screenshots, logs, configs? Provide paths or URLs so they can be referenced or embedded in docs.
-3. Any specific people, clients, or company names that should be anonymized or omitted?
-4. Which existing doc files are most relevant to update?
+3. Which existing doc files are most relevant to update?
 
 Proceed after receiving answers (or if user says to skip).
 
@@ -80,7 +79,7 @@ Scattered knowledge useful for development decisions:
 - Profiling results, benchmark numbers
 - Patterns from other firms or systems mentioned as reference
 
-This goes into current-state docs as it informs engineering decisions.
+This goes into current-state docs as it informs engineering decisions. Any specific people, clients, or company names that should be anonymized or omitted.
 
 ## Phase 4: Verification
 
